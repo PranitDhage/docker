@@ -1,0 +1,38 @@
+version: "3.7"
+services:
+  e-comm-service:
+    container_name: ecomm-app
+    image: pranitdhage/e-comm-service:1.0
+    # build: ../e-commerce
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - springapimysql-net
+    environment:
+      SPRING.DATASOURCE.URL: jdbc:mysql://mysqldb:3306/amazoneclone?useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true&failOverReadOnly=false&maxReconnects=10
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: root
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    container_name: mysqldb
+    image: mysql:8.0
+    restart: always
+    ports:
+      - 3306:3306
+    networks:
+      - springapimysql-net
+    environment:
+      DATABASE_HOST: docker-mysql
+      DATABASE_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: amazoneclone
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: root
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+
+networks:
+  springapimysql-net:
