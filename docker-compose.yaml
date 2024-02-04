@@ -32,7 +32,7 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: root
     volumes:
-      - ./data/mysql:/var/lib/mysql
+      - ./storage/mysql:/var/lib/mysql
 
 networks:
   springapimysql-net:
